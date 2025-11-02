@@ -9,8 +9,6 @@
 #include "MyString.hpp"
 
 int main(int argc, const char * argv[]) {
-    
-    MyString mystring;
+    MyString mystring("Vikram");
     std::cout<<mystring;
-
 }

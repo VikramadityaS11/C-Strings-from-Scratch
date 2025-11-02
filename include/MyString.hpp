@@ -6,10 +6,16 @@
 //
 #pragma once
 #include <iostream>
+#include <cstring>
+
 
 class MyString {
 public:
     MyString();
+    MyString(const char* str);
+    ~MyString();
+    MyString(const MyString& other);  // copy constructor
+    MyString& operator=(const MyString& other); // copy assignment
     friend std::ostream& operator<<(std::ostream&,const MyString&);
 private:
     char * data = nullptr;
