@@ -49,6 +49,25 @@ MyString& MyString::operator=(const MyString& other) {
     return *this; // to allow chaining a=b=c, returning reference
 }
 
+MyString::MyString(MyString&& other) noexcept : data(other.data){
+    other.data = nullptr;
+}
+
+
+MyString& MyString::operator=(MyString&& other) noexcept{
+    if (this != &other){
+        delete[] data;
+        data = other.data;
+        other.data = nullptr;
+    }
+    return *this;
+}
+
+void MyString::printAddress(){
+    std::cout<<*this<<std::endl;
+}
+
+
 std::ostream& operator<<(std::ostream& os,const MyString& s){ //overriding <<
     if(s.data){
         os<<s.data;
