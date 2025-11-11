@@ -49,7 +49,8 @@ MyString& MyString::operator=(const MyString& other) {
     return *this; // to allow chaining a=b=c, returning reference
 }
 
-MyString::MyString(MyString&& other) noexcept : data(other.data){
+MyString::MyString(MyString&& other) noexcept :
+    data(other.data){ // member initializer list to avoid unnecesary default initialization
     other.data = nullptr;
 }
 
@@ -63,8 +64,55 @@ MyString& MyString::operator=(MyString&& other) noexcept{
     return *this;
 }
 
+
+MyString MyString::operator+(const MyString& other) const{
+    size_t len1 = std::strlen(data);
+    size_t len2 = std::strlen(other.data);
+    
+    char* newData = new char[len1+len2+1];
+    std::strcpy(newData,data);
+    std::strcat(newData,other.data);
+    
+    MyString result;
+    result.data = newData;
+    return result; // return a copy
+}
+
+
+bool MyString::operator==(const MyString& other) const {
+    return std::strcmp(data, other.data) == 0;
+}
+
+char& MyString::operator[](size_t index){
+    return data[index];
+}
+
+bool MyString::operator!=(const MyString& other) const {
+    return std::strcmp(data,other.data) == 1;
+}
+
+size_t MyString::length() const{
+    return data ? std::strlen(data) : 0;
+}
+
+
 void MyString::printAddress(){
     std::cout<<*this<<std::endl;
+}
+
+std::istream& operator>>(std::istream& cin, MyString& str){
+    
+    char buffer[1024];
+    cin>>buffer;
+    
+    delete[] str.data;
+    
+    str.data = new char[std::strlen(buffer) + 1];
+    
+    std::strcpy(str.data, buffer);
+    
+    return cin;
+    
 }
 
 
