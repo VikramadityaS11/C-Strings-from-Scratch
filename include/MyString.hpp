@@ -22,10 +22,13 @@ public:
     bool operator==(const MyString& other) const;
     char& operator[](size_t index);//indexing
     bool operator!=(const MyString& other) const;
+    MyString& operator+=(const MyString& other);
     void printAddress();
     friend std::ostream& operator<<(std::ostream&,const MyString&);
     friend std::istream& operator>>(std::istream&, MyString&);
     size_t length() const;
+    const char& operator[](size_t index) const;
+
 private:
     char * data = nullptr;
 };
